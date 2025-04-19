@@ -12,6 +12,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
+
   final _passwordController = TextEditingController();
 
   bool _obscurePassword = true;
@@ -26,16 +27,22 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            /// spacing
-            const SizedBox(height: 75),
 
-            /// heart icon
-            const AnimatedHeartIcon(),
+            /// main icon
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 48),
+            //   child: Column(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: [
+            //       /// heart icon
+            //       const AnimatedHeartIcon(),
+            //     ],
+            //   ),
+            // ),
 
-            /// spacing
-            const SizedBox(height: 50),
+            const VerticalSpace(75),
 
-            /// title
+            /// Login label and subtitle
             Text(
               'Login',
               style: TextStyle(
@@ -45,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-            const SizedBox(height: 12),
+            const VerticalSpace(6),
 
             /// subtitle
             Text(
@@ -56,9 +63,66 @@ class _LoginPageState extends State<LoginPage> {
                 // fontWeight: FontWeight.bold,
               ),
             ),
+
+            const VerticalSpace(100),
+
+            /// email text field
+            TextField(
+              controller: _emailController,
+              decoration: InputDecoration(
+                label: Text('Email'),
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.email),
+              ),
+            ),
+
+            const VerticalSpace(15),
+
+            /// password text field
+            TextField(
+              controller: _passwordController,
+              decoration: InputDecoration(
+                label: Text('Password'),
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.lock),
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _obscurePassword = !_obscurePassword;
+                    });
+                  },
+
+                  child: TweenAnimationBuilder<double>(
+                    tween: Tween<double>(
+                      begin: 0,
+                      end: _obscurePassword ? 0 : 1,
+                    ),
+                    duration: Duration(milliseconds: 500),
+                    builder: (context, value, child) {
+                      return Transform.rotate(
+                        angle: value * 3.14,
+                        child: Icon(
+                          _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+              obscureText: _obscurePassword,
+            ),
           ],
         ),
       ),
     );
   }
+}
+
+class VerticalSpace extends StatelessWidget {
+  const VerticalSpace(this.height, {super.key});
+
+  final double height;
+
+  @override
+  Widget build(BuildContext context) => SizedBox(height: height);
 }
