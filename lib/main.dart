@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_screen/view/pages/login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,16 +16,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Login',
       theme: ThemeData(colorScheme: colorScheme, useMaterial3: true),
-
       color: colorScheme.primary,
-      home: Scaffold(
-        body: Center(
-          child: Text(
-            'Hello World!',
-            style: TextStyle(color: colorScheme.secondary, fontSize: 50),
-          ),
-        ),
-      ),
+      home: const LoginPage(),
     );
   }
 }
