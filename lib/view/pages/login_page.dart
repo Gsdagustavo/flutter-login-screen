@@ -52,78 +52,77 @@ class _LoginPageState extends State<LoginPage> {
                 ),
 
                 const VerticalSpace(50),
-                const Image(image: AssetImage('assets/images/mmlogo.png')),
-
+                Center(
+                  child: const Image(
+                    image: AssetImage('assets/images/mmlogo.png'),
+                  ),
+                ),
                 const VerticalSpace(50),
 
                 /// Text fields
-                SingleChildScrollView(
-                  // padding: EdgeInsets.only(
-                  //   bottom: MediaQuery.of(context).viewInsets.bottom,
-                  // ),
-                  child: Column(
-                    children: [
-                      /// email text field
-                      TextField(
-                        controller: _emailController,
-                        decoration: InputDecoration(
-                          label: Text('Email'),
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.email),
-                        ),
+                Column(
+                  children: [
+                    /// email text field
+                    TextField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        label: Text('Email'),
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.email),
                       ),
+                    ),
 
-                      const VerticalSpace(15),
+                    const VerticalSpace(15),
 
-                      /// password text field
-                      TextField(
-                        controller: _passwordController,
-                        decoration: InputDecoration(
-                          label: Text('Password'),
-                          border: OutlineInputBorder(),
-                          prefixIcon: Icon(Icons.lock),
-                          suffixIcon: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _obscurePassword = !_obscurePassword;
-                              });
-                            },
+                    /// password text field
+                    TextField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                        label: Text('Password'),
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.lock),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _obscurePassword = !_obscurePassword;
+                            });
+                          },
 
-                            child: TweenAnimationBuilder<double>(
-                              tween: Tween<double>(
-                                begin: 0,
-                                end: _obscurePassword ? 0 : 1,
-                              ),
-                              duration: Duration(milliseconds: 500),
-                              builder: (context, value, child) {
-                                return Transform.rotate(
-                                  angle: value * 3.14,
-                                  child: Icon(
-                                    _obscurePassword
-                                        ? Icons.visibility_off
-                                        : Icons.visibility,
-                                  ),
-                                );
-                              },
+                          child: TweenAnimationBuilder<double>(
+                            tween: Tween<double>(
+                              begin: 0,
+                              end: _obscurePassword ? 0 : 1,
                             ),
+                            duration: Duration(milliseconds: 500),
+                            builder: (context, value, child) {
+                              return Transform.rotate(
+                                angle: value * 3.14,
+                                child: Icon(
+                                  _obscurePassword
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                ),
+                              );
+                            },
                           ),
                         ),
-                        obscureText: _obscurePassword,
                       ),
-                    ],
-                  ),
+                      obscureText: _obscurePassword,
+                    ),
+                  ],
                 ),
 
                 const VerticalSpace(30),
 
                 /// Buttons
-                Column(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        /// Login button
-                        ElevatedButton(
+                    /// Login button
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 24),
+                        child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: colorScheme.surface,
                             shape: RoundedRectangleBorder(
@@ -140,16 +139,16 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                         ),
+                      ),
+                    ),
 
-                        /// Forgot password button/text
-                        TextButton(
-                          onPressed: forgotPassword,
-                          child: Text(
-                            'Forgot your password?',
-                            style: TextStyle(color: colorScheme.secondary),
-                          ),
-                        ),
-                      ],
+                    /// Forgot password button/text
+                    TextButton(
+                      onPressed: forgotPassword,
+                      child: Text(
+                        'Forgot your password?',
+                        style: TextStyle(color: colorScheme.secondary),
+                      ),
                     ),
                   ],
                 ),
