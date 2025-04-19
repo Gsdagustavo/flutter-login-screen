@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:login_screen/view/schemes/app_colorscheme.dart';
 
+import '../util/animated_heart_icon.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -9,7 +11,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -25,7 +26,16 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 100),
+            /// spacing
+            const SizedBox(height: 75),
+
+            /// heart icon
+            const AnimatedHeartIcon(),
+
+            /// spacing
+            const SizedBox(height: 50),
+
+            /// title
             Text(
               'Login',
               style: TextStyle(
@@ -35,8 +45,9 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-            const SizedBox(height: 12,),
+            const SizedBox(height: 12),
 
+            /// subtitle
             Text(
               'Please login to continue',
               style: TextStyle(
