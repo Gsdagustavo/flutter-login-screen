@@ -2,4 +2,4 @@
 
 Just a simple login screen made in Flutter
 
-![Final Result](https://raw.githubusercontent.com/Gsdagustavo/flutter-login-screen/main/assets/images/logoFinal.jpg)
+![Final Result](https://github.com/Gsdagustavo/flutter-login-screen/blob/main/assets/images/loginFinal.jpg)
