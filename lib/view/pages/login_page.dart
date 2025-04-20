@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:login_screen/controllers/user_controller.dart';
 import 'package:login_screen/view/schemes/app_colorscheme.dart';
+
+import '../../model/user.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,6 +16,48 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
 
   bool _obscurePassword = true;
+
+  void _forgotPassword() {
+    print('forgot password');
+  }
+
+  void _showCustomDialog({
+    required String title,
+    required String message,
+    required IconData icon,
+  }) {
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            alignment: Alignment.center,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(fontSize: 24),
+                  textAlign: TextAlign.start,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Icon(icon),
+                ),
+              ],
+            ),
+            content: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(child: Text(message, style: TextStyle(fontSize: 16))),
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Ok'),
+                ),
+              ],
+            ),
+          ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +174,40 @@ class _LoginPageState extends State<LoginPage> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          onPressed: login,
+                          onPressed: () {
+
+                            final email = _emailController.text;
+                            final password = _passwordController.text;
+
+                            if (email.isEmpty) {
+                              _showCustomDialog(
+                                title: 'Error',
+                                message: 'Invalid email!',
+                                icon: Icons.error,
+                              );
+                            }
+
+                            if (password.isEmpty) {
+                              _showCustomDialog(
+                                title: 'Error',
+                                message: 'Invalid password!',
+                                icon: Icons.error,
+                              );
+                            }
+
+                            User? loggedUser = UserController.login(
+                              email: _emailController.text,
+                              password: _passwordController.text,
+                            );
+
+                            if (loggedUser != null &&
+                                loggedUser.email.isNotEmpty) {
+
+
+                            } else {
+
+                            }
+                          },
                           child: Text(
                             'Login',
                             style: TextStyle(
@@ -144,7 +222,7 @@ class _LoginPageState extends State<LoginPage> {
 
                     /// Forgot password button/text
                     TextButton(
-                      onPressed: forgotPassword,
+                      onPressed: _forgotPassword,
                       child: Text(
                         'Forgot your password?',
                         style: TextStyle(color: colorScheme.secondary),
@@ -159,14 +237,6 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-}
-
-void login() {
-  print('login');
-}
-
-void forgotPassword() {
-  print('forgot password');
 }
 
 class VerticalSpace extends StatelessWidget {

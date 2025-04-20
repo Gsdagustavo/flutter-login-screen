@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:login_screen/controllers/user_controller.dart';
 import 'package:login_screen/view/pages/login_page.dart';
 
 void main() {
+  UserController.registerUser(email: 'freaky', password: 'bob');
   runApp(const MyApp());
 }
 

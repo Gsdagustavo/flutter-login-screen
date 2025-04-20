@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:collection/collection.dart';
+
 import '../model/user.dart';
 
 abstract class UserController {
@@ -8,11 +10,9 @@ abstract class UserController {
   /// Try to add a user on the users list based on the arguments given
   ///
   /// If the user already exists, returns false, otherwise returns true
-  bool registerUser({required String email, required String password}) {
-    if (users.any((u) => u.email == email)) {
-      log('user already exists');
-      return false;
-    }
+  static bool registerUser({required String email, required String password}) {
+    /// If the user exists, return false
+    if (checkIfUserExists(email: email) == null) return false;
 
     users.add(User(email, password));
     log('User with email $email added');
@@ -22,11 +22,10 @@ abstract class UserController {
   /// Returns a user based on the given arguments
   ///
   /// If the user does not exists, returns null instead
-  User? login({required String email, required String password}) {
-    User? existingUser = users.firstWhere(
-      (u) => u.email == email && u.password == password,
-      orElse: () => User('', ''),
-    );
+  static User? login({required String email, required String password}) {
+    User? existingUser = checkIfUserExists(email: email);
+
+    if (existingUser == null) return null;
 
     if (existingUser.email.isEmpty && existingUser.password.isEmpty) {
       log('User with email $email not found');
@@ -34,5 +33,20 @@ abstract class UserController {
     }
 
     return existingUser;
+  }
+
+  static User? checkIfUserExists({required String email}) {
+    return users.firstWhereOrNull((user) => user.email == email);
+  }
+
+  static bool validatePassword({
+    required String email,
+    required String password,
+  }) {
+    User? user = checkIfUserExists(email: email);
+
+    if (user == null) return false;
+
+    return (user.password == password);
   }
 }
